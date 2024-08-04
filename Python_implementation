@@ -1,0 +1,35 @@
+class User:
+    def __init__(self, user_id, email, name):
+        self.user_id = user_id
+        self.email = email
+        self.name = name
+
+class Room:
+    def __init__(self, room_id, room_name):
+        self.room_id = room_id
+        self.room_name = room_name
+
+class Meeting:
+    def __init__(self, meeting_id, day, start_time, end_time, room, creator):
+        self.meeting_id = meeting_id
+        self.day = day
+        self.start_time = start_time
+        self.end_time = end_time
+        self.room = room
+        self.creator = creator
+
+class ScheduleManager:
+    def __init__(self):
+        self.meetings = []
+
+    def schedule_meeting(self, meeting):
+        if self._is_conflict(meeting):
+            return "Conflict detected"
+        self.meetings.append(meeting)
+        return "Meeting scheduled successfully"
+
+    def _is_conflict(self, new_meeting):
+        for meeting in self.meetings:
+            if meeting.room == new_meeting.room and not (meeting.end_time <= new_meeting.start_time or meeting.start_time >= new_meeting.end_time):
+                return True
+        return False
